@@ -6,6 +6,7 @@
     "module": "commonjs",
     "rootDir": ".",
     "baseUrl": ".",
+    "outDir": "./dist",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,

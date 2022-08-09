@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon src/index.ts",
+    "build": "npx tsc --project tsconfig.json --noEmit",
     "test": "npx prettier --write . && npx eslint --ext .ts,.js src/ --fix",
     "prepare": "husky install"
   },
