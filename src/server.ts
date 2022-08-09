@@ -1,6 +1,6 @@
-import { ApolloServer } from "apollo-server-express";
-import { resolvers } from "./resolvers";
-import { buildSchema } from "type-graphql";
+import { ApolloServer } from 'apollo-server-express';
+import { buildSchema } from 'type-graphql';
+import { resolvers } from './resolvers';
 
 export const getApolloServer = async () => {
   const server = await Promise.resolve(
