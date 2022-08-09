@@ -1,4 +1,4 @@
-# base-backend-graphql
+# Midterms Backend
 
 Apollo and GraphQL Backend Base using NodeJS
 
