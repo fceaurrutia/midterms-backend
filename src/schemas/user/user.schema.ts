@@ -41,6 +41,9 @@ export class InputUser {
   email!: string;
 
   @Field()
+  password!: string;
+
+  @Field()
   userType_id!: string;
 }
 
