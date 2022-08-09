@@ -1,15 +1,40 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
+model UserType {
+  id          String @id @unique
+  name        String
+  description String
+  User        User[]
+}
+
 model User {
-  id        String   @id
-  createdAt DateTime @default(now())
-  email     String   @unique
-  name      String?
+  id          String   @id @unique
+  name        String
+  surname     String
+  email       String   @unique
+  password    String
+  userType    UserType @relation(fields: [userType_id], references: [id])
+  userType_id String
+}
+
+model Assignment {
+  id   String @id @unique
+  name String
+}
+
+model Section {
+  id String @id @unique
+  name String
+  assignment    Assignment @relation(fields: [assignment_id], references: [id])
+  assignment_id String
 }

@@ -28,8 +28,10 @@
     "graphql": "^15.3.0",
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.3.3",
+    "pg": "^8.7.3",
     "prisma": "^4.1.0",
     "reflect-metadata": "^0.1.13",
+    "socket.io": "^4.5.1",
     "type-graphql": "^1.1.1",
     "uuidv4": "^6.2.13"
   }
