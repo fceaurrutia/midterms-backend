@@ -3,12 +3,12 @@ import fs from 'fs';
 
 const readKeys = () => {
   const privateKey = Buffer.from(
-    fs.readFileSync('utils/private.pem', {
+    fs.readFileSync('utils/encrypt/private.pem', {
       encoding: 'utf-8',
     })
   );
   const publicKey = Buffer.from(
-    fs.readFileSync('utils/public.pub', {
+    fs.readFileSync('utils/encrypt/public.pub', {
       encoding: 'utf-8',
     })
   );

@@ -3,33 +3,30 @@ import {
   InputUser,
   InputUserFind,
   InputUserType,
-  User,
 } from 'src/schemas/user/user.schema';
 import { PrismaClient } from '@prisma/client';
 import { v4 } from 'uuid';
 import { EncryptRSA, ValidateRSA } from '../../utils/crypto';
+import { makeToken } from '../../utils/jwt';
 
 const prisma = new PrismaClient();
 
-const exclude = (userList: User[]) => {
-  for (const user of userList) {
-    if (user.password) user['password'] = '';
-  }
-  return userList;
-};
-
 class UserService {
   async Login(input: InputLogin) {
+    if (!input.password) throw new Error(`You haven't filled in a password`);
     prisma.$connect();
     const user = await prisma.user.findFirst({
       where: { email: input.email },
     });
 
+    if (!user) throw new Error('User not found');
+
     if (!ValidateRSA(user?.password || '', input.password))
       throw new Error('The password is incorrect, try again');
 
     prisma.$disconnect();
-    return user;
+    const token = makeToken({ id: user?.id, email: user?.email });
+    return token;
   }
   async GetUsers() {
     prisma.$connect();

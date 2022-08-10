@@ -41,7 +41,7 @@ export default class UserResolver {
     return this.userService.GetUserTypes();
   }
 
-  @Query(() => User)
+  @Query(() => String)
   Login(@Arg('loginInfo') loginInfo: InputLogin) {
     return this.userService.Login(loginInfo);
   }
