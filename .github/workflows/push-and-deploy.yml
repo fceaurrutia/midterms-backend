@@ -45,6 +45,6 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            sudo docker login ${{ env.REGISTRY }} -u ${{ github.actor }} -p ${{ secrets.TOKEN }}
+            sudo docker login ${{ env.REGISTRY }} -u ${{ github.actor }} --password-stdin ${{ secrets.TOKEN }}
+            sudo docker pull ${{ env.REGISTRY }}/${{ env.REPO }}/${{ env.IMAGE_NAME }}:latest
             sudo docker-compose up -d --build
-          # ${{ env.REGISTRY }}/${{ env.REPO }}/${{ env.IMAGE_NAME }}:latest
