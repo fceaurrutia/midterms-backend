@@ -1,10 +1,12 @@
 import express from 'express';
 import 'dotenv/config';
 import { getApolloServer } from './server';
+import cors from 'cors';
 
 // Import schemas
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 
 getApolloServer()
