@@ -13,7 +13,11 @@ getApolloServer()
   .then(server => {
     const port: number = parseInt(process.env.PORT || '3005');
 
-    server.applyMiddleware({ app, path: '/graphql' });
+    server.applyMiddleware({
+      cors: { origin: '*', credentials: true },
+      app,
+      path: '/graphql',
+    });
     app.listen({ port }, (): void =>
       console.log(
         `🚀 GraphQL-Server is running on http://localhost:${port}/graphql`
