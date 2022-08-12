@@ -45,5 +45,6 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
+            echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" > '.env'
             sudo docker login ${{ env.REGISTRY }} -u ${{ github.actor }} -p ${{ secrets.TOKEN }}
             sudo docker-compose up -d --build

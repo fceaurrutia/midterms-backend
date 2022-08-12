@@ -10,10 +10,6 @@ services:
       - '5432:5432'
     volumes:
       - ./db:/var/lib/postgresql/data
-  backend:
-    image: ghcr.io/fceaurrutia/midterms-backend/midterms-backend:latest
-    ports:
-      - '3005:3005'
 volumes:
   db:
     driver: local
