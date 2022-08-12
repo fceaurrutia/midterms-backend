@@ -11,7 +11,10 @@ services:
     volumes:
       - ./db:/var/lib/postgresql/data
   backend:
-    image: .
+    build:
+      context: .
+    ports:
+      - '3005:3005'
 volumes:
   db:
     driver: local
