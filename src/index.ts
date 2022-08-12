@@ -8,14 +8,14 @@ const app = express();
 const corsOptions = { origin: '*', credentials: true };
 
 app.use(express.json());
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 
 getApolloServer()
   .then(server => {
     const port: number = parseInt(process.env.PORT || '3005');
 
     server.applyMiddleware({
-      cors: false,
+      cors: corsOptions,
       app,
       path: '/graphql',
     });
