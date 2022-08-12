@@ -34,13 +34,13 @@ jobs:
   deploy_to_server:
     name: Deploy to Oracle Cloud Server
     runs-on: ubuntu-latest
+    environment: production
     needs: build_and_push_to_registry
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
       - name: Execute SSH commands
         uses: appleboy/ssh-action@master
-        environment: production
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
