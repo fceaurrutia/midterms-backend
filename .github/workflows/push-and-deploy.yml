@@ -31,22 +31,19 @@ jobs:
           context: .
           push: true
           tags: ${{ env.REGISTRY }}/${{ env.REPO }}/${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.tag }}
-          run: echo "IMAGE_URL=${{ env.REGISTRY }}/${{ env.REPO }}/${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.tag }}" >> $GITHUB_ENV
   deploy_to_server:
-    name: Build and push Docker image to GitHub Packages
+    name: Deploy to Oracle Cloud Server
     runs-on: ubuntu-latest
+    needs: build_and_push_to_registry
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
-      - name: Login to GHCR
-        uses: docker/login-action@v1
+      - name: Execute SSH commands
+        uses: appleboy/ssh-action@master
         with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.TOKEN }}
-      - name: Set name to lowercase
-        run: |
-          echo "REPO=${GITHUB_REPOSITORY,,}" >> $GITHUB_ENV
-      - name: Shorten the tag to 7 characters
-        id: vars
-        run: echo ::set-output name=tag::$(echo ${GITHUB_SHA::7})
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            sudo docker login ${{ env.REGISTRY }} -u ${{ github.actor }} -p ${{ secrets.TOKEN }}
+          # ${{ env.REGISTRY }}/${{ env.REPO }}/${{ env.IMAGE_NAME }}:latest
