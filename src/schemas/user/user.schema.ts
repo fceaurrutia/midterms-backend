@@ -23,10 +23,13 @@ export class User {
   surname!: string;
 
   @Field()
+  password!: string;
+
+  @Field()
   email!: string;
 
   @Field()
-  userType_id!: UserType;
+  userType!: UserType;
 }
 
 @InputType()
@@ -41,6 +44,9 @@ export class InputUser {
   email!: string;
 
   @Field()
+  password!: string;
+
+  @Field()
   userType_id!: string;
 }
 
@@ -48,4 +54,22 @@ export class InputUser {
 export class InputUserFind {
   @Field()
   id!: string;
+}
+
+@InputType()
+export class InputUserType {
+  @Field()
+  name!: string;
+
+  @Field()
+  description!: string;
+}
+
+@InputType()
+export class InputLogin {
+  @Field()
+  email!: string;
+
+  @Field()
+  password!: string;
 }
