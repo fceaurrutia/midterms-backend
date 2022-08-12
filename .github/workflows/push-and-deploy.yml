@@ -13,24 +13,24 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
-      - name: Login to GHCR
-        uses: docker/login-action@v1
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.TOKEN }}
-      - name: Set name to lowercase
-        run: |
-          echo "REPO=${GITHUB_REPOSITORY,,}" >> $GITHUB_ENV
-      - name: Shorten the tag to 7 characters
-        id: vars
-        run: echo ::set-output name=tag::$(echo ${GITHUB_SHA::7})
-      - name: Build and push to GitHub Packages
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          push: true
-          tags: ${{ env.REGISTRY }}/${{ env.REPO }}/${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.tag }}
+      # - name: Login to GHCR
+      #   uses: docker/login-action@v1
+      #   with:
+      #     registry: ${{ env.REGISTRY }}
+      #     username: ${{ github.actor }}
+      #     password: ${{ secrets.TOKEN }}
+      # - name: Set name to lowercase
+      #   run: |
+      #     echo "REPO=${GITHUB_REPOSITORY,,}" >> $GITHUB_ENV
+      # - name: Shorten the tag to 7 characters
+      #   id: vars
+      #   run: echo ::set-output name=tag::$(echo ${GITHUB_SHA::7})
+      # - name: Build and push to GitHub Packages
+      #   uses: docker/build-push-action@v2
+      #   with:
+      #     context: .
+      #     push: true
+      #     tags: ${{ env.REGISTRY }}/${{ env.REPO }}/${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.tag }}
   deploy_to_server:
     name: Deploy to Oracle Cloud Server
     runs-on: ubuntu-latest
@@ -45,6 +45,6 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            sudo docker login ${{ env.REGISTRY }} -u ${{ github.actor }} --password-stdin ${{ secrets.TOKEN }}
+            sudo docker login ${{ env.REGISTRY }} -u ${{ github.actor }} -p ${{ secrets.TOKEN }}
             sudo docker pull ${{ env.REGISTRY }}/${{ env.REPO }}/${{ env.IMAGE_NAME }}:latest
             sudo docker-compose up -d --build
